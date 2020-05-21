@@ -1,4 +1,14 @@
 import os
+import sounddevice as sd
+import pyaudio
+import wave
+
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 2
+RATE = 44100
+RECORD_SECONDS = 10
+WAVE_OUTPUT_FILENAME = "output.wav"
 
 def print_title():
     os.system("clear")
@@ -7,12 +17,68 @@ def print_title():
     for note in notes:
         print("\n" + str(note))
 
+def record_voice():
+    p = pyaudio.PyAudio()
+
+    stream = p.open(format=FORMAT,
+                channels=CHANNELS,
+                rate=RATE,
+                input=True,
+                frames_per_buffer=CHUNK)
+
+    print("* recording")
+
+    frames = []
+
+    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+        data = stream.read(CHUNK)
+        frames.append(data)
+
+    print("* done recording")
+
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
+
+    wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+    wf.setnchannels(CHANNELS)
+    wf.setsampwidth(p.get_sample_size(FORMAT))
+    wf.setframerate(RATE)
+    wf.writeframes(b''.join(frames))
+    wf.close()
+
+def play_voice():
+    wf = wave.open(WAVE_OUTPUT_FILENAME, 'rb')
+
+    p = pyaudio.PyAudio()
+
+    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                channels=wf.getnchannels(),
+                rate=wf.getframerate(),
+                output=True)
+
+    data = wf.readframes(CHUNK)
+
+    while (data != '')&(data != b''):
+        stream.write(data)
+        data = wf.readframes(CHUNK)
+
+    stream.stop_stream()
+    stream.close()
+
+    p.terminate()
+
 
 notes = ["Do tasks", "Having a meeting at 14:00"]
 
 def main():
     print_title()
-
+    print("Create new voice message [y]\n")
+    if (input("") == "y"):
+        record_voice()
+    print("Play new voice message [y]\n")
+    if (input("") == "y"):
+        play_voice()
 try:
     main()
 except TypeError:
