@@ -1,85 +1,93 @@
 import os
-import sounddevice as sd
-import pyaudio
-import wave
+import time
+import Stream as St
 
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 2
-RATE = 44100
-RECORD_SECONDS = 10
-WAVE_OUTPUT_FILENAME = "output.wav"
+notes = []
 
 def print_title():
     os.system("clear")
 
     print("\t************ Your notes **************")
     for note in notes:
-        print("\n" + str(note))
+        print("\n\t" + str(note))
 
-def record_voice():
-    p = pyaudio.PyAudio()
+def open_notes():
+    file = open("essential.txt")
+    for line in file:
+        info = line.split(":")
+        notes.append(info[0])
+    file.close()
 
-    stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
+def add_note():
+    os.system("clear")
+    bool = True
+    name = None
+    desc = None
+    time = None
 
-    print("* recording")
+    while (bool):
+         print("Add name of note\n")
+         name = input("")
+         os.system("clear")
+         print("Write some description")
+         desc = input("")
+         os.system("clear")
+         print("Write time in format [day hours minutes year]")
+         time = input("")
+         os.system("clear")
+         print("Everything alright? [y,n]\n")
+         print(name)
+         print(desc)
+         print(time)
+         if (input("") == 'y'):
+             bool = False
+    print("Hit enter to start recording")
+    input("")
+    St.record_voice(name)
+    os.system("clear")
+    print("\nPlay new voice message [y]\n")
+    if (input("") == "y"):
+        St.play_voice(name)
+    file = open("essential.txt", "a")
+    file.write(name + ":" + desc + ":" + time + "\n")
+    file.close()
+    notes.append(name)
 
-    frames = []
+def delete_note():
+    os.system("clear")
+    print("Deleting note:\n")
+    print("Enter full name of note to delete:")
+    name = input("")
+    if (name in notes):
+        del notes[notes.index(name)]
 
-    for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-        data = stream.read(CHUNK)
-        frames.append(data)
+        file = open("essential.txt", "r")
+        lines = []
+        for line in file:
+            if (line.startswith(name) == False):
+                lines.append(line)
+        file.close()
 
-    print("* done recording")
-
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
-
-    wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-    wf.setnchannels(CHANNELS)
-    wf.setsampwidth(p.get_sample_size(FORMAT))
-    wf.setframerate(RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
-
-def play_voice():
-    wf = wave.open(WAVE_OUTPUT_FILENAME, 'rb')
-
-    p = pyaudio.PyAudio()
-
-    stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                channels=wf.getnchannels(),
-                rate=wf.getframerate(),
-                output=True)
-
-    data = wf.readframes(CHUNK)
-
-    while (data != '')&(data != b''):
-        stream.write(data)
-        data = wf.readframes(CHUNK)
-
-    stream.stop_stream()
-    stream.close()
-
-    p.terminate()
-
-
-notes = ["Do tasks", "Having a meeting at 14:00"]
+        file = open("essential.txt", "w")
+        for line in lines:
+            file.write(line)
+        file.close()
+    else:
+        print("Incorrect name of note!")
 
 def main():
-    print_title()
-    print("Create new voice message [y]\n")
-    if (input("") == "y"):
-        record_voice()
-    print("Play new voice message [y]\n")
-    if (input("") == "y"):
-        play_voice()
+    while True:
+        print_title()
+        com = input("\n")
+
+        if (com == "n"):
+            add_note()
+        elif (com == "d"):
+            delete_note()
+        elif (com == "q"):
+            exit(0)
 try:
+    open_notes()
     main()
 except TypeError:
     exit(0)
