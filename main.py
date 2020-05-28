@@ -72,6 +72,9 @@ def delete_note():
         for line in lines:
             file.write(line)
         file.close()
+
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "./Records/" + name + ".wav")
+        os.remove(path)
     else:
         print("Incorrect name of note!")
 
