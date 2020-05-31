@@ -1,14 +1,28 @@
-import sounddevice as sd
-import pyaudio
 import wave
+import threading
+import pyaudio
 
 chunk = 1024
 format = pyaudio.paInt16
 channels = 2
 rate = 44100
-RECORD_SECONDS = 10
 
-def record_voice(name):
+class ShouldListen():
+    def __init__(self):
+        self.bool = True
+        self._lock = threading.Lock()
+
+    def set_false(self):
+        with self._lock:
+            self.bool = False
+
+    def get_value(self):
+        with self._lock:
+            return self.bool
+
+should_listen = ShouldListen()
+
+def record(name):
     p = pyaudio.PyAudio()
 
     stream = p.open(format=format,
@@ -21,11 +35,9 @@ def record_voice(name):
 
     frames = []
 
-    for i in range(0, int(rate / chunk * RECORD_SECONDS)):
+    while should_listen.get_value():
         data = stream.read(chunk)
         frames.append(data)
-
-    print("* done recording")
 
     stream.stop_stream()
     stream.close()
@@ -37,6 +49,15 @@ def record_voice(name):
     wf.setframerate(rate)
     wf.writeframes(b''.join(frames))
     wf.close()
+
+def record_voice(name):
+    recording = threading.Thread(target=record, args=(name,),)
+    recording.start()
+    print("\nTo stop recording press Enter")
+    input("")
+    should_listen.set_false()
+    recording.join()
+
 
 def play_voice(name):
     wf = wave.open("./Records/" + name + ".wav", 'rb')
