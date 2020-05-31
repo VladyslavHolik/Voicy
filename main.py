@@ -155,6 +155,13 @@ def see_note():
     if input("\nDo you want to play this record? [y]\n\n") == "y":
         St.play_voice(name)
 
+def print_help():
+    os.system("clear")
+    print("For adding note press n")
+    print("For watching note press w, then write name of note to see")
+    print("For deleting note press d, then write name of note to delete")
+    print("For quiting program press q")
+    input("")
 
 def main():
     queue_rec = QueueOfRecords()
@@ -172,6 +179,8 @@ def main():
             delete_note()
         elif com == "w":
             see_note()
+        elif com == "?":
+            print_help()
         elif com == "q":
             os.system("clear")
             exit(0)
