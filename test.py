@@ -1,49 +1,22 @@
-import time
-import os
+import pyaudio
 import Stream as St
-import threading
 
-unused_notes = ["Do homeor"]
-class Queue_of_records():
+class Test:
     def __init__(self):
-        self.queue = []
-        self._lock = threading.Lock()
+        self.log = {}
 
-    def add_record(self, name):
-        with self._lock:
-            self.queue.append(name)
+    def assert_equal(self, x, y):
+        self.log[str(x) + " == " + str(y)] = x == y
 
-    def get_record(self):
-        with self._lock:
-            return self.queue.pop(0)
+    def see_results(self):
+        for key in self.log:
+            print(key + " => " + str(self.log[key]))
 
-    def is_empty(self):
-        with self._lock:
-            if (len(self.queue) == 0):
-                return True
-            else:
-                return False
+test = Test()
 
-queue = Queue_of_records()
-while True:
-    file = open("essential.txt")
-    for record in file:
-        info_date_list = record.split(":")
-        name_of_note = info_date_list[0]
-        if (name_of_note in unused_notes):
-            date = info_date_list[2].split(" ")
-            current_date = time.ctime().split(" ")
-            print(current_date[2] == date[0])
-            print(current_date[3][0:2] == date[1])
-            print(current_date[3][3:5] == date[2])
-            print(current_date[4] == date[3])
-            if (current_date[2] == date[0])&(
-            current_date[3][0:2] == date[1])&(
-            current_date[3][3:5] == date[2])&(
-            str(current_date[4]) == str(date[3]).strip()):
-                print("Done")
-                queue.add_record(str(name_of_note))
-                unused_notes.remove(name_of_note)
-    file.close()
-    time.sleep(1)
-    print(queue.queue)
+test.assert_equal(St.chunk, 1024)
+test.assert_equal(St.format, pyaudio.paInt16)
+test.assert_equal(St.channels, 2)
+test.assert_equal(St.rate, 44100)
+
+test.see_results()
