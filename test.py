@@ -14,7 +14,6 @@ class Test:
 test = Test()
 
 test.assert_equal(St.chunk, 1024)
-test.assert_equal(St.format, pyaudio.paInt16)
 test.assert_equal(St.channels, 2)
 test.assert_equal(St.rate, 44100)
 
