@@ -1,4 +1,3 @@
-import pyaudio
 import Stream as St
 
 class Test:

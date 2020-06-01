@@ -62,6 +62,9 @@ confidence=
 # --disable=W".
 disable=print-statement,
         missing-module-docstring,
+        redefined-outer-name,
+        unused-variable,
+        redefined-builtin,
         consider-using-sys-exit,
         invalid-name,
         missing-function-docstring,
