@@ -9,28 +9,29 @@ can_i_play = True
 unused_notes = []
 
 class QueueOfRecords():
-    '''queue of records, that should be played at this time'''
+
+    """queue of records, that should be played at this time"""
     def __init__(self):
         self.queue = []
         self._lock = threading.Lock()
 
     def add_record(self, name):
-        '''adding record with name'''
+        """adding record with name"""
         with self._lock:
             self.queue.append(name)
 
     def get_record(self):
-        '''returns name of record to play'''
+        """returns name of record to play"""
         with self._lock:
             return self.queue.pop(0)
 
     def is_empty(self):
-        '''checks if queue is empty'''
+        """checks if queue is empty"""
         with self._lock:
             return len(self.queue) == 0
 
 def make_list_from_string(line):
-    '''function for creating info list for daemon_adding'''
+    """function for creating info list for daemon_adding"""
     result = []
     sub_string = ""
     for index in range(0, len(line)):
@@ -44,7 +45,7 @@ def make_list_from_string(line):
     return result
 
 def daemon_adding(queue):
-    '''daemon which adds records to play'''
+    """daemon which adds records to play"""
     unused_notes.extend(notes)
 
     while True:
@@ -65,7 +66,7 @@ def daemon_adding(queue):
         file.close()
 
 def daemon_playing(queue):
-    '''daemon which plays records in queue'''
+    """daemon which plays records in queue"""
     while True:
         if can_i_play:
             while not queue.is_empty():
@@ -74,7 +75,7 @@ def daemon_playing(queue):
 
 
 def print_title():
-    '''function for displaying head of note board'''
+    """function for displaying head of note board"""
     os.system("clear")
 
     print("\t************ Your notes **************")
@@ -82,7 +83,7 @@ def print_title():
         print("\n\t" + str(note))
 
 def open_notes():
-    '''function for initialising list notes from cache'''
+    """function for initialising list notes from cache"""
     file = open("essential.txt")
     for line in file:
         info = line.split(":")
@@ -90,7 +91,7 @@ def open_notes():
     file.close()
 
 def add_note():
-    '''function for adding new note'''
+    """function for adding new note"""
     can_i_play = False
 
     os.system("clear")
@@ -130,7 +131,7 @@ def add_note():
     can_i_play = True
 
 def delete_note():
-    '''function for invoking interface for deleting note'''
+    """function for invoking interface for deleting note"""
     can_i_play = False
     os.system("clear")
     print("Deleting note:\n")
@@ -160,7 +161,7 @@ def delete_note():
         can_i_play = True
 
 def see_note():
-    '''function for seeing note and its desctiption with opportunity to listen record'''
+    """function for seeing note and its desctiption with opportunity to listen record"""
     os.system("clear")
     name = input("Write name of note to watch\n\n")
     if name not in notes:
@@ -180,7 +181,7 @@ def see_note():
         St.play_voice(name)
 
 def print_help():
-    '''function print user help info'''
+    """function print user help info"""
     os.system("clear")
     print("For adding note press n")
     print("For watching note press w, then write name of note to see")
@@ -189,7 +190,7 @@ def print_help():
     input("")
 
 def main():
-    '''main function that employs behavior of program'''
+    """main function that employs behavior of program"""
     queue_rec = QueueOfRecords()
     daemon_add_notes = threading.Thread(target=daemon_adding, args=(queue_rec,), daemon=True)
     daemon_play_notes = threading.Thread(target=daemon_playing, args=(queue_rec,), daemon=True)

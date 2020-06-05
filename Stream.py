@@ -8,7 +8,8 @@ channels = 2
 rate = 44100
 
 class ShouldListen():
-    '''bool program uses for defining status ( listening or not)'''
+
+    """bool program uses for defining status ( listening or not)"""
     def __init__(self):
         self.bool = True
         self._lock = threading.Lock()
@@ -25,7 +26,7 @@ class ShouldListen():
 should_listen = ShouldListen()
 
 def record(name):
-    '''begins to listen and then saves record'''
+    """begins to listen and then saves record"""
     p = pyaudio.PyAudio()
 
     stream = p.open(format=format,
@@ -54,6 +55,7 @@ def record(name):
     wf.close()
 
 def record_voice(name):
+
     '''
     main function for record, starts daemon so that programm
     knows when to stop recording
@@ -67,7 +69,7 @@ def record_voice(name):
 
 
 def play_voice(name):
-    '''main function for playing records'''
+    """main function for playing records"""
     wf = wave.open("./Records/" + name + ".wav", 'rb')
 
     p = pyaudio.PyAudio()
