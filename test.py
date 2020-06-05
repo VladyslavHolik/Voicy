@@ -1,14 +1,18 @@
 import Stream as St
+   """Module which contains program's behaviour"""
 
 class Test:
-# class for creating tests
+    """Class for creating tests"""
     def __init__(self):
+        """Creating dictionary for test."""
         self.log = {}
 
     def assert_equal(self, x, y):
+        """Adding assert_equal test to dictionary of tests."""
         self.log[str(x) + " == " + str(y)] = x == y
 
     def see_results(self):
+        """Function for watching results."""
         for key in self.log:
             print(key + " => " + str(self.log[key]))
 

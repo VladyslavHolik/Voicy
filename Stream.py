@@ -1,4 +1,5 @@
 import wave
+    """Module for working with files.wav."""
 import threading
 import pyaudio
 
@@ -8,24 +9,27 @@ channels = 2
 rate = 44100
 
 class ShouldListen():
-# bool program uses for defining status ( listening or not)
+    """Bool program uses for defining status ( listening or not)."""
+
     def __init__(self):
+        """Creating bool and threading.Lock."""
         self.bool = True
         self._lock = threading.Lock()
 
     def set_false(self):
-    # sets bool to false
+        """Sets bool to false."""
         with self._lock:
             self.bool = False
 
     def get_value(self):
+        """Returns bool."""
         with self._lock:
             return self.bool
 
 should_listen = ShouldListen()
 
 def record(name):
-# begins to listen and then saves record
+    """Begins to listen and then saves record."""
     p = pyaudio.PyAudio()
 
     stream = p.open(format=format,
@@ -54,8 +58,10 @@ def record(name):
     wf.close()
 
 def record_voice(name):
-# main function for record, starts daemon so that programm
-# knows when to stop recording
+    '''
+    Main function for record, starts daemon so that programm
+    knows when to stop recording
+    '''
     recording = threading.Thread(target=record, args=(name,),)
     recording.start()
     print("\nTo stop recording press Enter")
@@ -65,7 +71,7 @@ def record_voice(name):
 
 
 def play_voice(name):
-# main function for playing records
+    """Main function for playing records."""
     wf = wave.open("./Records/" + name + ".wav", 'rb')
 
     p = pyaudio.PyAudio()
