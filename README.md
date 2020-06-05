@@ -57,6 +57,7 @@ Repo has these files:
 
 ## License
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34c37b9a1ce845f4a9351e77bacbe962)](https://app.codacy.com/manual/vladlinu/Voicy?utm_source=github.com&utm_medium=referral&utm_content=vladlinu/Voicy&utm_campaign=Badge_Grade_Dashboard)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 -   **[MIT license](http://opensource.org/licenses/mit-license.php)**
