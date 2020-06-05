@@ -29,6 +29,18 @@ class QueueOfRecords():
         with self._lock:
             return len(self.queue) == 0
 
+def make_list_from_string(line):
+    result = []
+    sub_string = ""
+    for index in range(0, len(line)):
+        if (line[index] != " "):
+            sub_string += line[index]
+            if (index == len(line) - 1):
+                result.append(sub_string)
+        elif (sub_string != ""):
+            result.append(sub_string)
+            sub_string = ""
+    return result
 
 def daemon_adding(queue):
 # daemon which adds records to play
@@ -41,7 +53,7 @@ def daemon_adding(queue):
             name_of_note = info_date_list[0]
             if name_of_note in unused_notes:
                 date = info_date_list[2].split(" ")
-                current_date = time.ctime().split(" ")
+                current_date = make_list_from_string(time.ctime())
                 if (current_date[2] == date[1])& \
                     (current_date[1] == date[0])& \
                     (current_date[3][0:2] == date[2])& \
