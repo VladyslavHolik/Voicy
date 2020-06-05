@@ -4,13 +4,13 @@ Voicy is console program for organising your life using records that will be pla
 
 ## Table of Contents
 
-- [Description and using](#description and using)
+- [Description](#description)
 - [Dependencies](#dependencies)
 - [Contributing](#contributing)
-- [Repository structure](#repository structure)
+- [Repo_structure](#repo_structure)
 - [License](#license)
 
-## Description and using
+## Description
 
 Voicy is used for saving records of your voice and corresponding text or warnings, records are recodred within Voicy and will be played at time which you set.
 
@@ -44,7 +44,7 @@ Before using Voicy you should be confident that you have above modules
 Feel free to contibute this project.
 Text me your ideas and suggestions to develop Voicy
 
-## Repository structure
+## Repo_structure
 
 Repo has these files:
 * main.py (main file of program, provides program interface and connections between all libraries)
