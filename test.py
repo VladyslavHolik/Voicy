@@ -1,6 +1,7 @@
 import Stream as St
 
 class Test:
+# class for creating tests
     def __init__(self):
         self.log = {}
 
