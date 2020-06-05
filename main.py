@@ -10,7 +10,9 @@ unused_notes = []
 
 class QueueOfRecords():
     """Queue of records, that should be played at this time."""
+
     def __init__(self):
+        """creating bool and threading.Lock"""
         self.queue = []
         self._lock = threading.Lock()
 

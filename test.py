@@ -3,6 +3,7 @@ import Stream as St
 class Test:
     """Class for creating tests"""
     def __init__(self):
+        """Creating dictionary for test"""
         self.log = {}
 
     def assert_equal(self, x, y):

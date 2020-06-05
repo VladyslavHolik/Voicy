@@ -9,7 +9,9 @@ rate = 44100
 
 class ShouldListen():
     """Bool program uses for defining status ( listening or not)."""
+
     def __init__(self):
+        """creating bool and threading.Lock"""
         self.bool = True
         self._lock = threading.Lock()
 
