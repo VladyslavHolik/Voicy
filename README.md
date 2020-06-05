@@ -2,6 +2,10 @@
 
 Voicy is console program for organising your life using records that will be played at right time
 
+> [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bba8b41312524d85ab2fe47c3ace0b73)](https://www.codacy.com/manual/vladlinu/Voicy?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vladlinu/Voicy&amp;utm_campaign=Badge_Grade)
+> [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+> [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
 ## Table of Contents
 
 -   [Description](#description)
