@@ -30,14 +30,15 @@ class QueueOfRecords():
             return len(self.queue) == 0
 
 def make_list_from_string(line):
+    '''function for creating info list for daemon_adding'''
     result = []
     sub_string = ""
     for index in range(0, len(line)):
-        if (line[index] != " "):
+        if line[index] != " ":
             sub_string += line[index]
-            if (index == len(line) - 1):
+            if index == len(line) - 1:
                 result.append(sub_string)
-        elif (sub_string != ""):
+        elif sub_string != "":
             result.append(sub_string)
             sub_string = ""
     return result
@@ -73,6 +74,7 @@ def daemon_playing(queue):
 
 
 def print_title():
+    '''function for displaying head of note board'''
     os.system("clear")
 
     print("\t************ Your notes **************")
@@ -80,6 +82,7 @@ def print_title():
         print("\n\t" + str(note))
 
 def open_notes():
+    '''function for initialising list notes from cache'''
     file = open("essential.txt")
     for line in file:
         info = line.split(":")
@@ -127,6 +130,7 @@ def add_note():
     can_i_play = True
 
 def delete_note():
+    '''function for invoking interface for deleting note'''
     can_i_play = False
     os.system("clear")
     print("Deleting note:\n")
@@ -176,6 +180,7 @@ def see_note():
         St.play_voice(name)
 
 def print_help():
+    '''function print user help info'''
     os.system("clear")
     print("For adding note press n")
     print("For watching note press w, then write name of note to see")
