@@ -1,0 +1,8 @@
+astroid==2.4.1
+numpy==1.18.4
+PyYAML==3.12
+six==1.15.0
+Wave==0.0.2
+pylint==2.5.2
+PyAudio==0.2.11
+
