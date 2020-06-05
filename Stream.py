@@ -1,4 +1,5 @@
 import wave
+    """Module for working with files.wav."""
 import threading
 import pyaudio
 
@@ -11,7 +12,7 @@ class ShouldListen():
     """Bool program uses for defining status ( listening or not)."""
 
     def __init__(self):
-        """creating bool and threading.Lock"""
+        """Creating bool and threading.Lock."""
         self.bool = True
         self._lock = threading.Lock()
 
@@ -21,6 +22,7 @@ class ShouldListen():
             self.bool = False
 
     def get_value(self):
+        """Returns bool."""
         with self._lock:
             return self.bool
 

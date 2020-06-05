@@ -1,9 +1,10 @@
 import Stream as St
+   """Module which contains program's behaviour"""
 
 class Test:
     """Class for creating tests"""
     def __init__(self):
-        """Creating dictionary for test"""
+        """Creating dictionary for test."""
         self.log = {}
 
     def assert_equal(self, x, y):

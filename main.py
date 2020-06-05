@@ -1,4 +1,5 @@
 import os
+    """Module for working with system."""
 import time
 import threading
 import Stream as St
@@ -12,7 +13,7 @@ class QueueOfRecords():
     """Queue of records, that should be played at this time."""
 
     def __init__(self):
-        """creating bool and threading.Lock"""
+        """Creating bool and threading.Lock."""
         self.queue = []
         self._lock = threading.Lock()
 
