@@ -1,5 +1,5 @@
 astroid==2.4.1
-numpy==1.18.4
+numpy==1.22.0
 pyyaml>=4.2b1
 six==1.15.0
 Wave==0.0.2
